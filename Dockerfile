@@ -1,6 +1,6 @@
 FROM nvidia/cuda:10.0-runtime-ubuntu18.04
 
-LABEL Description="ROS melodic Dockerfile with Python 3 and GUI support in Ubuntu 18.04" Version="1.0"
+LABEL Description="ROS melodic Dockerfile with Python 3 and GUI support in Ubuntu 18.04" Version="1.1"
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -19,15 +19,15 @@ RUN  apt-get update \
 RUN apt-get install -y ros-melodic-desktop
 
 # add specific version 3.4.1. 
-RUN apt-get install -y ros-melodic-plotjuggler \
-     && apt-get install -y git
+RUN apt-get install -y ros-melodic-plotjuggler ros-melodic-plotjuggler-ros \
+     && apt-get install -y git ros-melodic-image-transport-plugins
 
 # uncomment below and add your apt packages here (if required)
-# RUN apt-get install -y *package name*
+RUN apt-get install -y python3-empy
 
 # uncomment pip upgrade and add your pip packages here (if required)
-# RUN python3 -m pip install --upgrade pip \
-#     && python3 -m pip install *package name*
+RUN python3 -m pip install --upgrade pip \
+     && python3 -m pip install rospkg opencv-python torchvision
 
 # write source into bashrc
 RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
